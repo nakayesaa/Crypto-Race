@@ -1,0 +1,39 @@
+#all of these dependencies being use to support the data pipeline
+# binance websocket -> async processing ->  internal state -> Axum WebSocket -> react frontend
+#
+
+[package]
+name = "cryptogp-backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# async engine, to running everything concurrently
+# use to keep a binance websocket connection open, serve frontend websocket client, and do rolling window math
+tokio = { version = "1", features = ["full"] }
+
+# WebSocket client to connects outward to Binance streaming API
+tokio-tungstenite = { version = "0.21", features = ["native-tls"] }
+tungstenite = "0.21"
+
+# HTTP + WebSocket server to handles incoming connections from the React frontend
+axum = { version = "0.7", features = ["ws"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors"] }
+
+# Serialization dependencies to convert Rust structs to or from JSON for Binance responses + outbound race state
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Async stream combinators, needed to poll/sink WebSocket message streams
+futures-util = "0.3"
+
+# Environment variables, load .env for port, trading pairs, etc.
+dotenvy = "0.15"
+
+# Structured logging — tracing macros (info!, warn!, error!) with pretty terminal output
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Timestamps — used to track when price snapshots were recorded for rolling window math
+chrono = { version = "0.4", features = ["serde"] }

@@ -1,0 +1,33 @@
+{
+  // TypeScript compiler configuration for the frontend
+  // Key things to note:
+  //   - "target": "ESNext" — output modern JS, Vite handles the transpilation
+  //   - "lib": ["DOM", "DOM.Iterable", "ESNext"] — gives us browser globals + latest JS
+  //   - "moduleResolution": "bundler" — tells TS to resolve modules the way Vite does
+  //   - "jsx": "react-jsx" — use the new JSX transform (no need to import React in every file)
+  //   - "strict": true — catch type errors early, your future self will thank you
+  //   - "paths": { "@/*": ["./src/*"] } — mirrors the Vite alias so TS understands it too
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}

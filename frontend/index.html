@@ -1,0 +1,23 @@
+<!doctype html>
+<!--
+  index.html — Vite entry point HTML
+
+  This is the single HTML file for the entire app (no routing, single page).
+  Key things:
+    - The <div id="root"> is where React mounts
+    - The <script type="module" src="/src/main.tsx"> is the Vite entry point
+    - Set the <title> to "CryptoGP"
+    - Dark background color on <body> so there's no white flash before the 3D scene loads
+    - No other HTML needed — everything is rendered by React/R3F
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CryptoGP</title>
+  </head>
+  <body style="margin: 0; background: #0a0a0a;">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

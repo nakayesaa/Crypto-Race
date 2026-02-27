@@ -1,0 +1,16 @@
+/* index.css — Global styles and Tailwind CSS directives
+ *
+ * The three @tailwind lines below are required for Tailwind to inject its styles.
+ *   - base:       CSS reset + sensible defaults
+ *   - components: reusable component classes (if any defined in tailwind.config)
+ *   - utilities:  all the utility classes (flex, p-4, text-white, etc.)
+ *
+ * Add any global overrides below — for example:
+ *   - Remove the default cursor for canvas elements
+ *   - Custom scrollbar styles for the leaderboard
+ *   - Font-face declarations if using a custom race-style font
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

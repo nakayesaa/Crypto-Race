@@ -1,0 +1,11 @@
+{
+  // Separate tsconfig for Vite config file itself (vite.config.ts runs in Node, not the browser)
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["vite.config.ts"]
+}
