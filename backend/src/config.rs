@@ -1,4 +1,6 @@
 use std::env;
+//this file is responsible for loading configuration from environtment variables   
+// and providing a Config struct that the rest of the backend can use
 
 #[derive(Debug)]
 pub enum TimeWindow {

@@ -12,7 +12,7 @@ use config::Config;
 use price_engine::Pricestore;
 use ws_server::ClientRegistry;
 
-#[tokio::main]
+#[tokio::main] // tokio runtime for async main function
 async fn main() {
     tracing_subscriber::fmt()
         .with_env_filter("info")
@@ -25,14 +25,14 @@ async fn main() {
     let price_store = Arc::new(Mutex::new(Pricestore::new()));
     let registry: ClientRegistry = Arc::new(Mutex::new(Vec::new()));
 
-    // Spawn the CoinGecko poller task (Phase 2)
+    // Spawn the CoinGecko poller task
     let coingecko_config = Arc::clone(&config);
     let coingecko_store = Arc::clone(&price_store);
     tokio::spawn(async move {
         coingecko::run(coingecko_config, coingecko_store).await;
     });
-
-    // Spawn the broadcast loop (Step 14)
+    
+    // Spawn the broadcast loop
     let broadcast_config = Arc::clone(&config);
     let broadcast_store = Arc::clone(&price_store);
     let broadcast_registry = Arc::clone(&registry);
@@ -55,6 +55,10 @@ async fn main() {
 
             // Update positions: position += speed * dt, wrap at 1.0
             for car in &mut race_state.cars {
+                if car.speed.is_nan() || car.speed.is_infinite() {
+                    car.position = *positions.entry(car.symbol.clone()).or_insert(0.0);
+                    continue;
+                }
                 let pos = positions.entry(car.symbol.clone()).or_insert(0.0);
                 *pos += car.speed * dt;
                 if *pos > 1.0 {

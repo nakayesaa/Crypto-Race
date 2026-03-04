@@ -1,5 +1,5 @@
 use std::sync::{Arc, Mutex};
-
+use axum::extract::ws::Message;
 use axum::{
     Router,
     extract::{State, WebSocketUpgrade, ws::WebSocket},
@@ -13,10 +13,10 @@ use tower_http::cors::{Any, CorsLayer};
 pub type ClientRegistry = Arc<Mutex<Vec<mpsc::UnboundedSender<String>>>>;
 
 async fn ws_handler(
-    ws: WebSocketUpgrade,
+    web_socket: WebSocketUpgrade,
     State(registry): State<ClientRegistry>,
 ) -> impl IntoResponse {
-    ws.on_upgrade(|socket| handle_client(socket, registry))
+    web_socket.on_upgrade(|socket| handle_client(socket, registry))
 }
 
 async fn handle_client(socket: WebSocket, registry: ClientRegistry) {
@@ -29,7 +29,7 @@ async fn handle_client(socket: WebSocket, registry: ClientRegistry) {
     let forward_task = tokio::spawn(async move {
         while let Some(msg) = rx.recv().await {
             if sink
-                .send(axum::extract::ws::Message::Text(msg.into()))
+                .send(Message::Text(msg.into()))
                 .await
                 .is_err()
             {
